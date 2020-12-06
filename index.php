@@ -1,3 +1,4 @@
+<?php session_start();?>
 <!doctype html>
 <html lang="en">
 
@@ -61,6 +62,13 @@
                         <a class="dropdown-item" href="#">Something else here</a>
                     </div>
                 </li>
+
+                <?php
+                if ($_SESSION['login']) {
+                    echo '<li class="nav-item"><form method="POST" action="index.php"><button type="submit" class="btn btn-primary" name="logout">logout ' . $_SESSION['login'] . '</button></form></li>';
+                }
+                ?>
+
             </ul>
             <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
@@ -116,10 +124,12 @@
                         require_once('php/functions.php');
 
                         echo DBConection();
-
+                        
                         if (isset($_POST['loginname']) && isset($_POST['loginpassword'])) {
                             $check = login($_POST['loginname'], $_POST['loginpassword']);
-                            echo $check;
+                            if ($check == 1) {
+                                $_SESSION['login'] = $_POST['loginname'];
+                            }
                         }
 
                         aPoem();
