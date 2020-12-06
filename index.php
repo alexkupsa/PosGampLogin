@@ -80,17 +80,17 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form method="POST" action="regi.php">
+                    <form method="POST" action="index.php">
                         <div class="modal-body mx-3">
                             <div class="md-form mb-5">
                                 <i class="fas fa-user prefix grey-text"></i>
-                                <input type="text" id="form3" class="form-control validate">
+                                <input type="text" id="form3" class="form-control validate" name="loginname">
                                 <label data-error="wrong" data-success="right" for="form3">Your name</label>
                             </div>
 
                             <div class="md-form mb-4">
                                 <i class="fas fa-lock prefix grey-text"></i>
-                                <input type="password" id="defaultForm-pass" class="form-control validate">
+                                <input type="password" id="defaultForm-pass" class="form-control validate" name="loginpassword">
                                 <label data-error="wrong" data-success="right" for="defaultForm-pass">Your password</label>
                             </div>
 
@@ -114,6 +114,13 @@
 
                         //includieren der Dateifunctions.php
                         require_once('php/functions.php');
+
+                        echo DBConection();
+
+                        if (isset($_POST['loginname']) && isset($_POST['loginpassword'])) {
+                            $check = login($_POST['loginname'], $_POST['loginpassword']);
+                            echo $check;
+                        }
 
                         aPoem();
                         echo '</br>';

@@ -42,6 +42,35 @@
             echo "Eingabe falsch";
         }
     }
+
+    function login($user, $pswd){
+        $check = 0;
+        $servername = "localhost";
+        $uname = "root";
+        $pwd = "KupsaSQL";
+        $dbname = "PosGamp";
+
+        try {
+            $conn = new PDO("mysql:host=$servername;dbname=$dbname", $uname, $pwd);
+            // set the PDO error mode to exception
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $sql = "SELECT * FROM login WHERE username='$user'";
+            // use exec() because no results are returned
+            while($check == 0){
+                foreach ($conn->query($sql) as $row) {
+                    if($row['passwort'] == $pswd){
+                        $check = 1;
+                        break;
+                    }
+                }
+            }
+            //echo "successfully";
+        } catch (PDOException $e) {
+            echo $sql . "<br>" . $e->getMessage();
+        }
+        $conn = null;
+        return $check;
+    }
     
     function aPoem(){
         $poem = array("poem", "poem", "poem", "poem", "poem", "poem", "poem", "poem", "poem", "poem", "poem");
