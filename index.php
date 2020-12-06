@@ -64,8 +64,11 @@
                 </li>
 
                 <?php
-                if ($_SESSION['login']) {
+                if (isset($_SESSION['login'])) {
                     echo '<li class="nav-item"><form method="POST" action="index.php"><button type="submit" class="btn btn-primary" name="logout">logout ' . $_SESSION['login'] . '</button></form></li>';
+                }
+                if(isset($_POST['logout'])){
+                    session_destroy();
                 }
                 ?>
 
